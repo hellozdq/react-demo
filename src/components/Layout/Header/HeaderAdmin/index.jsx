@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Menu, Dropdown } from 'antd';
 import PubSub from "pubsub-js"
 import {
@@ -7,17 +7,20 @@ import {
     DownOutlined
   } from '@ant-design/icons';
 import './index.less'
-export default class HeaderAdmin extends Component {
-    state = {
-        collapsed:false
+
+const HeaderAdmin = ()=>{
+    const [collapsed,setCollapsed] = useState(false);
+
+    // 切换收起和展开侧边栏
+    const toggle = () => {
+        setCollapsed((c)=>{
+            c = !c;
+            PubSub.publish("collapsed",c);
+            return c;
+        });
     }
-    toggle = () => {
-        this.setState({collapsed:!this.state.collapsed},()=>{
-            PubSub.publish("collapsed",this.state.collapsed)
-        })
-        
-    }
-    menu = (
+    // 右侧下拉菜单
+    const menu = (
         <Menu>
           <Menu.Item>
             <div>修改信息</div>
@@ -28,23 +31,23 @@ export default class HeaderAdmin extends Component {
           </Menu.Item>
         </Menu>
     );
-    render() {
-        return (
-            <div className="admin">
-                <div className="left">
-                {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                    className: 'trigger',
-                    onClick: this.toggle,
-                })}
-                </div>
-                <div className="right">
-                    <Dropdown overlay={this.menu}>
-                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                        admin <DownOutlined />
-                        </a>
-                    </Dropdown>
-                </div>
+    return (
+        <div className="admin">
+            <div className="left">
+            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                className: 'trigger',
+                onClick: toggle,
+            })}
             </div>
-        )
-    }
+            <div className="right">
+                <Dropdown overlay={menu}>
+                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                    admin <DownOutlined />
+                    </a>
+                </Dropdown>
+            </div>
+        </div>
+    )
 }
+
+export default HeaderAdmin
