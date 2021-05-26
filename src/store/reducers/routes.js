@@ -1,12 +1,14 @@
 import { ADDROUTE, REMOVEROUTE,SELECTTAB,SETPARENT } from '../constants'
 import { allRoutes } from '@/router/routes'
  
+/* 存储routes到localstorage start */
 function getLocalStorage(){
     return JSON.parse(localStorage.getItem("routes"));
 }
 function setLocalStorage(data){
     return localStorage.setItem("routes",JSON.stringify(data));
 }
+/* 存储routes到localstorage end */
 
 const localRoutes = getLocalStorage("routes");
 
