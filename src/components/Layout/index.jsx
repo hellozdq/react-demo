@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import Header from './Header'
-import Aside from './Aside'
+import Sidebar from './Sidebar'
 import "./index.less"
 
 export default class index extends Component {
     render() {
         return (
             <div className="layout">
-                <Aside/>
+                <Sidebar/>
                 <div className="container">
                     <Header/>
                     <div className="main">

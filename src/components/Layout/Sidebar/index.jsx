@@ -65,8 +65,6 @@ class Aside extends Component {
   // 改变侧边栏的下拉
   onOpenChange = keys => {
     this.props.setParent(keys);
-    console.log(keys)
-    
   }
 
   render() {
